@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1280</width>
+    <height>720</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Server Control</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* --- Стиль Unreal Engine 5 --- */
+
+/* Глобальный фон и текст */
+QWidget
+{
+    background-color: #1e1e1e;
+    color: #cfcfcf;
+    font-family: &quot;Segoe UI&quot;, &quot;Roboto&quot;, sans-serif;
+    font-size: 10pt;
+}
+
+/* --- Кнопки (Flat Style) --- */
+QPushButton
+{
+    background-color: #383838;
+    border: none;
+    border-radius: 3px;
+    padding: 6px 15px;
+    color: #ffffff;
+    font-weight: bold;
+    min-width: 80px;
+}
+
+QPushButton:hover
+{
+    background-color: #505050;
+}
+
+QPushButton:pressed
+{
+    background-color: #8F3460;
+}
+
+/* --- Группы (GroupBox) --- */
+QGroupBox
+{
+    border: 1px solid #303030;
+    border-radius: 4px;
+    margin-top: 22px;
+    background-color: #242424;
+    font-weight: bold;
+}
+
+QGroupBox::title
+{
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    left: 10px;
+    padding: 0 5px;
+    background-color: #1e1e1e; /* Перекрытие рамки заголовком */
+    color: #a0a0a0;
+}
+
+/* --- Таблицы --- */
+QTableWidget
+{
+    background-color: #151515;
+    border: 1px solid #2a2a2a;
+    gridline-color: #2a2a2a;
+    selection-background-color: #8F3460;
+    selection-color: white;
+}
+
+QHeaderView::section
+{
+    background-color: #2f2f2f;
+    color: #bbbbbb;
+    padding: 4px;
+    border: none;
+    border-right: 1px solid #202020;
+    border-bottom: 1px solid #202020;
+}
+
+QTableCornerButton::section
+{
+    background-color: #2f2f2f;
+    border: none;
+}
+
+/* --- Лог (TextEdit) --- */
+QTextEdit
+{
+    background-color: #0f0f0f;
+    border: 1px solid #333333;
+    color: #aaaaaa;
+    font-family: &quot;Consolas&quot;, monospace;
+    selection-background-color: #8F3460;
+}
+
+/* --- Скроллбары --- */
+QScrollBar:vertical
+{
+    border: none;
+    background: #1e1e1e;
+    width: 8px;
+    margin: 0px;
+}
+
+QScrollBar::handle:vertical
+{
+    background: #484848;
+    min-height: 20px;
+    border-radius: 4px;
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical
+{
+    height: 0px;
+}
+
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>15</number>
+    </property>
+    <property name="leftMargin">
+     <number>15</number>
+    </property>
+    <property name="topMargin">
+     <number>15</number>
+    </property>
+    <property name="rightMargin">
+     <number>15</number>
+    </property>
+    <property name="bottomMargin">
+     <number>15</number>
+    </property>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_Controls">
+      <property name="spacing"><number>8</number></property>
+      <item>
+       <widget class="QPushButton" name="m_btnStartClients">
+        <property name="text"><string>Start Server</string></property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="m_btnStopClients">
+        <property name="text"><string>Stop Server</string></property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation"><enum>Qt::Horizontal</enum></property>
+        <property name="sizeType"><enum>QSizePolicy::Preferred</enum></property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QComboBox" name="m_langCombo">
+        <item><property name="text"><string>English</string></property></item>
+        <item><property name="text"><string>Русский</string></property></item>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="grpClients">
+      <property name="title">
+       <string>Connected Clients</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QTableWidget" name="m_clientTable">
+         <property name="showGrid">
+          <bool>false</bool>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>false</bool>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+         <attribute name="horizontalHeaderStretchLastSection">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="verticalHeaderVisible">
+          <bool>false</bool>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>ID</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>IP-Address</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Status</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="grpData">
+      <property name="title">
+       <string>Data from Devices</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QTableWidget" name="m_dataTable">
+         <property name="showGrid">
+          <bool>false</bool>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>false</bool>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+         <attribute name="horizontalHeaderStretchLastSection">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="verticalHeaderVisible">
+          <bool>false</bool>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>Client ID</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Type</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Content</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Time</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_Log">
+      <property name="text">
+       <string>Output Log:</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #888888; font-weight: bold; margin-bottom: 2px;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTextEdit" name="m_logEdit">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>150</height>
+       </size>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
