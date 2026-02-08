@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QThread>
 #include <QJsonObject>
+#include <QSettings>
 #include <QTranslator>
 
 #include "server/serverbackend.h"
@@ -45,6 +46,7 @@ private:
     Ui::MainWindow *ui;
     QThread *m_serverThread;
     ServerBackend *m_backend;
+    QSettings settings;
     QTranslator m_translator;
 
 };

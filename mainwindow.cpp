@@ -9,6 +9,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , settings(qApp->applicationDirPath() + "/config.ini", QSettings::IniFormat)
 {
     // Initializing the interface from a .ui file
     ui->setupUi(this);
@@ -149,10 +150,15 @@ void MainWindow::updateDataTable(qintptr id, QString type, QJsonObject data)
 
 void MainWindow::checkThresholds(qintptr id, const QString& type, const QJsonObject& data)
 {
-    // Configuration example: if CPU > 80, write WARNING in the log
+    // Read the threshold from the config
+    // Group "threshold"
+    // "80" is the default value if nothing is found in the config
+    int threshold = settings.value("thresholds/cpu_overloaded", 80).toInt();
+
+    // Configuration example: if CPU > threshold, write WARNING in the log
     if (type == PacketType::DEVICE_STATUS)
     {
-        if (data["cpu_usage"].toInt() > 80)
+        if (data["cpu_usage"].toInt() > threshold)
         {
             updateLog(QString(tr("WARNING: Client %1 is overloaded! CPU: %2%")).arg(id).arg(data["cpu_usage"].toInt()));
         }
