@@ -129,9 +129,11 @@ void MainWindow::updateDataTable(qintptr id, QString type, QJsonObject data)
             .arg(data["memory_usage"].toInt())
             .arg(data["uptime"].toInt());
     }
-    else
+    else if (type == PacketType::LOG)
     {
-        contentStr = data["message"].toString(); // Log
+        contentStr = QString("%1: %2")
+            .arg(data["severity"].toString())
+            .arg(data["message"].toString());
     }
 
     ui->m_dataTable->setItem(row, 0, new QTableWidgetItem(QString::number(id)));
