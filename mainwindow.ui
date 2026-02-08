@@ -14,9 +14,9 @@
    <string>Server Control</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">/* --- Стиль Unreal Engine 5 --- */
+   <string notr="true">
 
-/* Глобальный фон и текст */
+/* Global background and text */
 QWidget
 {
     background-color: #1e1e1e;
@@ -25,7 +25,7 @@ QWidget
     font-size: 10pt;
 }
 
-/* --- Кнопки (Flat Style) --- */
+/* --- Buttons --- */
 QPushButton
 {
     background-color: #383838;
@@ -47,7 +47,7 @@ QPushButton:pressed
     background-color: #8F3460;
 }
 
-/* --- Группы (GroupBox) --- */
+/* --- GroupBox --- */
 QGroupBox
 {
     border: 1px solid #303030;
@@ -63,11 +63,11 @@ QGroupBox::title
     subcontrol-position: top left;
     left: 10px;
     padding: 0 5px;
-    background-color: #1e1e1e; /* Перекрытие рамки заголовком */
+    background-color: #1e1e1e;
     color: #a0a0a0;
 }
 
-/* --- Таблицы --- */
+/* --- Tables --- */
 QTableWidget
 {
     background-color: #151515;
@@ -93,7 +93,7 @@ QTableCornerButton::section
     border: none;
 }
 
-/* --- Лог (TextEdit) --- */
+/* --- TextEdit --- */
 QTextEdit
 {
     background-color: #0f0f0f;
@@ -103,7 +103,7 @@ QTextEdit
     selection-background-color: #8F3460;
 }
 
-/* --- Скроллбары --- */
+/* --- Scrollbars --- */
 QScrollBar:vertical
 {
     border: none;
