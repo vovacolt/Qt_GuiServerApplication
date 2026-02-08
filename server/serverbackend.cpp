@@ -49,9 +49,24 @@ void ServerBackend::onNewConnection()
     QTcpSocket* socket = m_server->nextPendingConnection();
     qintptr id = socket->socketDescriptor();
 
+    // Get the address
+    QHostAddress clientAddress = socket->peerAddress();
+    QString ipString;
+
+    // If it's IPv4 mapped to IPv6, convert to pure IPv4
+    if (clientAddress.protocol() == QAbstractSocket::IPv6Protocol &&
+        QHostAddress(clientAddress.toIPv4Address()).protocol() == QAbstractSocket::IPv4Protocol)
+    {
+        ipString = QHostAddress(clientAddress.toIPv4Address()).toString();
+    }
+    else
+    {
+        ipString = clientAddress.toString();
+    }
+
     ClientContext *ctx = new ClientContext
     {
-        socket->peerAddress().toString(),
+        ipString,
         socket->peerPort(),
         socket
     };
@@ -61,8 +76,8 @@ void ServerBackend::onNewConnection()
     connect(socket, &QTcpSocket::readyRead, this, &ServerBackend::onReadyRead);
     connect(socket, &QTcpSocket::disconnected, this, &ServerBackend::onClientDisconnected);
 
-    emit clientConnected(id, ctx->ip);
-    emit logMessage(tr("New client: ") + ctx->ip);
+    emit clientConnected(id, QString("%1:%2").arg(ctx->ip).arg(ctx->port));
+    emit logMessage(tr("New client: ") + QString("%1:%2").arg(ctx->ip).arg(ctx->port));
 
     QJsonObject response;
     response[KEY_TYPE] = PacketType::HANDSHAKE;
