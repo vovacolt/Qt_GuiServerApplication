@@ -9,117 +9,136 @@
         <translation>Управление сервером</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="153"/>
+        <location filename="mainwindow.ui" line="151"/>
         <source>Start Server</source>
         <translation>Запустить сервер</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="159"/>
+        <location filename="mainwindow.ui" line="156"/>
         <source>Stop Server</source>
         <translation>Остановить сервер</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="172"/>
+        <location filename="mainwindow.ui" line="167"/>
         <source>English</source>
-        <translation>Английский</translation>
+        <translation>English</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="173"/>
+        <location filename="mainwindow.ui" line="168"/>
         <source>Русский</source>
         <translation>Русский</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="182"/>
+        <location filename="mainwindow.ui" line="176"/>
         <source>Connected Clients</source>
         <translation>Подключённые клиенты</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="204"/>
+        <location filename="mainwindow.ui" line="198"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="209"/>
-        <source>IP-Address</source>
+        <location filename="mainwindow.ui" line="203"/>
+        <source>IP Address</source>
         <translation>IP-адрес</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="214"/>
-        <source>Status</source>
-        <translation>Статус</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="225"/>
-        <source>Data from Devices</source>
-        <translation>Данные с устройств</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="247"/>
-        <source>Client ID</source>
-        <translation>ID клиента</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="252"/>
-        <source>Type</source>
-        <translation>Тип</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="257"/>
-        <source>Content</source>
-        <translation>Содержимое</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="262"/>
-        <source>Time</source>
-        <translation>Время</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="273"/>
+        <location filename="mainwindow.ui" line="213"/>
         <source>Output Log:</source>
         <translation>Лог вывода:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="160"/>
+        <location filename="mainwindow.ui" line="235"/>
+        <source>Server Data:</source>
+        <translation>Данные сервера:</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="262"/>
+        <source>Client ID</source>
+        <translation>ID клиента</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="267"/>
+        <source>Type</source>
+        <translation>Тип</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="272"/>
+        <source>Content</source>
+        <translation>Содержимое</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="277"/>
+        <source>Time</source>
+        <translation>Время</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="105"/>
         <source>WARNING: Client %1 is overloaded! CPU: %2%</source>
         <translation>ВНИМАНИЕ: Клиент %1 перегружен! CPU: %2%</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="168"/>
-        <source>Command: The launch has been sent to all clients</source>
-        <translation>Команда: Сигнал запуска отправлен всем клиентам</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="174"/>
-        <source>Command: Stop sent to all clients</source>
-        <translation>Команда: Сигнал остановки отправлен всем клиентам</translation>
+        <location filename="mainwindow.cpp" line="45"/>
+        <source>Server Log: %1</source>
+        <translation>Лог сервера: %1</translation>
     </message>
 </context>
 <context>
     <name>ServerBackend</name>
     <message>
-        <location filename="server/serverbackend.cpp" line="21"/>
-        <source>The server is running on port: </source>
+        <location filename="server/serverbackend.cpp" line="33"/>
+        <source>Server running on port: </source>
         <translation>Сервер запущен на порту: </translation>
     </message>
     <message>
-        <location filename="server/serverbackend.cpp" line="25"/>
-        <source>Server startup error: </source>
-        <translation>Ошибка запуска сервера: </translation>
+        <location filename="server/serverbackend.cpp" line="38"/>
+        <source>Startup error: </source>
+        <translation>Ошибка запуска: </translation>
     </message>
     <message>
-        <location filename="server/serverbackend.cpp" line="66"/>
+        <location filename="server/serverbackend.cpp" line="91"/>
         <source>New client: </source>
         <translation>Новый клиент: </translation>
     </message>
     <message>
-        <location filename="server/serverbackend.cpp" line="161"/>
+        <location filename="server/serverbackend.cpp" line="162"/>
+        <source>JSON Parse Error from %1: %2</source>
+        <translation>Ошибка парсинга JSON от %1: %2</translation>
+    </message>
+    <message>
+        <location filename="server/serverbackend.cpp" line="207"/>
         <source>Client disconnected: </source>
         <translation>Клиент отключен: </translation>
     </message>
     <message>
-        <location filename="server/serverbackend.cpp" line="180"/>
-        <source>Command sent to everyone: </source>
-        <translation>Команда отправлена всем: </translation>
+        <location filename="server/serverbackend.cpp" line="221"/>
+        <source>Forcing disconnect client %1. Reason: %2</source>
+        <translation>Принудительное отключение клиента %1. Причина: %2</translation>
+    </message>
+    <message>
+        <location filename="server/serverbackend.cpp" line="267"/>
+        <source>Command broadcast: </source>
+        <translation>Рассылка команды: </translation>
+    </message>
+</context>
+<context>
+    <name>LogModel</name>
+    <message>
+        <source>Client ID</source>
+        <translation>ID клиента</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Тип</translation>
+    </message>
+    <message>
+        <source>Content</source>
+        <translation>Содержимое</translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation>Время</translation>
     </message>
 </context>
 </TS>
