@@ -1,6 +1,6 @@
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += network widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += network widgets concurrent
 
 CONFIG += c++17
 
