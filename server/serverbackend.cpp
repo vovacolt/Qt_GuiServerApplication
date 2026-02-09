@@ -64,36 +64,59 @@ void ServerBackend::onNewConnection()
     {
         QTcpSocket* socket = m_server->nextPendingConnection();
 
-        socket->setSocketOption(QAbstractSocket::KeepAliveOption, 1);
+        if (!socket)
+        {
+           continue;
+        }
 
-        qintptr id = socket->socketDescriptor();
+        socket->setParent(nullptr);
 
-        QHostAddress clientAddress = socket->peerAddress();
+        QtConcurrent::run([this, socket]()
+        {
+            qintptr id = socket->socketDescriptor();
 
-        QString ipString = (clientAddress.protocol() == QAbstractSocket::IPv6Protocol &&
-                            QHostAddress(clientAddress.toIPv4Address()).protocol() == QAbstractSocket::IPv4Protocol)
-                            ? QHostAddress(clientAddress.toIPv4Address()).toString()
-                            : clientAddress.toString();
+            // Get the address
+            QHostAddress clientAddress = socket->peerAddress();
+            QString ipString = clientAddress.toString();
 
-        ClientContext *ctx = new ClientContext();
-        ctx->ip = ipString;
-        ctx->port = socket->peerPort();
-        ctx->socket = socket;
-        ctx->lastActiveTime = QDateTime::currentMSecsSinceEpoch();
-        ctx->lastFloodCheckTime = ctx->lastActiveTime;
+            ClientContext *ctx = new ClientContext();
+            ctx->ip = ipString;
+            ctx->port = socket->peerPort();
+            ctx->socket = socket;
 
-        m_clients.insert(id, ctx);
+            // If it's IPv4 mapped to IPv6, convert to pure IPv4
+            if (clientAddress.protocol() == QAbstractSocket::IPv6Protocol &&
+                QHostAddress(clientAddress.toIPv4Address()).protocol() == QAbstractSocket::IPv4Protocol)
+            {
+                ipString = QHostAddress(clientAddress.toIPv4Address()).toString();
+            }
+            else
+            {
+                ipString = clientAddress.toString();
+            }
 
-        connect(socket, &QTcpSocket::readyRead, this, &ServerBackend::onReadyRead);
-        connect(socket, &QTcpSocket::disconnected, this, &ServerBackend::onClientDisconnected);
+            {
+                QMutexLocker locker(&m_mutex);
+                m_clients.insert(id, ctx);
+            }
 
-        emit clientConnected(id, QString("%1:%2").arg(ctx->ip).arg(ctx->port));
-        emit logMessage(tr("New client: ") + QString("%1:%2").arg(ctx->ip).arg(ctx->port));
+            QMetaObject::invokeMethod(this, [this, socket, ctx, id, ipString]()
+            {
+                socket->setParent(this);
 
-        QJsonObject response;
-        response[KEY_TYPE] = PacketType::HANDSHAKE;
-        response["status"] = "Connected";
-        socket->write(packJson(response));
+                connect(socket, &QTcpSocket::readyRead, this, &ServerBackend::onReadyRead);
+                connect(socket, &QTcpSocket::disconnected, this, &ServerBackend::onClientDisconnected);
+
+                emit clientConnected(id, QString("%1:%2").arg(ipString).arg(ctx->port));
+                emit logMessage(tr("New client: ") + ipString);
+
+                QJsonObject response;
+                response[KEY_TYPE] = PacketType::HANDSHAKE;
+                socket->write(packJson(response));
+            },
+
+            Qt::QueuedConnection);
+        });
     }
 }
 
@@ -220,7 +243,12 @@ void ServerBackend::disconnectClient(qintptr id, const QString& reason)
         QTcpSocket* socket = m_clients[id]->socket;
         emit logMessage(tr("Forcing disconnect client %1. Reason: %2").arg(id).arg(reason));
         socket->disconnectFromHost();
+
+        {
+        QMutexLocker locker(&m_mutex);
+        delete m_clients[id];
         m_clients.remove(id);
+        }
     }
 }
 

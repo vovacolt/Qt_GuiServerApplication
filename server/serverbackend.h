@@ -5,6 +5,7 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QMap>
+#include <QMutex>
 #include "../common/networkhelpers.h"
 
 // Structure for storing client context
@@ -62,6 +63,7 @@ private:
     QTcpServer* m_server;
     QMap<qintptr, ClientContext*> m_clients;
     QTimer* m_cleanupTimer;
+    QMutex m_mutex;
 
 };
 
